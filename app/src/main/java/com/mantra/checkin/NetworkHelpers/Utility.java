@@ -1,4 +1,4 @@
-package com.mantra.checkin.NetworkHelper;
+package com.mantra.checkin.NetworkHelpers;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
