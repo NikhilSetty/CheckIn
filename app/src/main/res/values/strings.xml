@@ -2,8 +2,13 @@
     <string name="app_name">CheckIn</string>
     <string name="title_activity_splash">SplashActivity</string>
 
+    <string name="server_client_id">360697764233-lukurm2i9li3o4atg0mn01mhaon1u6le.apps.googleusercontent.com</string>
+
     <string name="gps_enable_message">Your GPS seems to be disabled, do you want to enable it?</string>
     <string name="yes_string">Yes</string>
     <string name="no_string">No</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="singing_in">Signing in..</string>
+
 
 </resources>

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.mantra.checkin.Session.SessionHelper;
+import com.mantra.checkin.SignUp.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -29,6 +30,9 @@ public class SplashActivity extends AppCompatActivity {
             buildAlertMessageNoGps();
         }
         SessionHelper.mLocation = SessionHelper.mLocationUtility.getLastKnownLocation(getApplicationContext());
+
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
     }
 
     private void buildAlertMessageNoGps() {
