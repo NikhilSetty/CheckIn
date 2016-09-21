@@ -14,6 +14,7 @@ public class DbHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         Log.v("creating " , "DB");
         Log.v("created " , "DB");
+        db.execSQL(Schema.CREATE_TABLE_USERINFO);
     }
 
     @Override

@@ -5,10 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.mantra.checkin.DBHandlers.UserInfoDBHandler;
 import com.mantra.checkin.Session.SessionHelper;
 import com.mantra.checkin.SignUp.LoginActivity;
 
@@ -30,6 +32,14 @@ public class SplashActivity extends AppCompatActivity {
             buildAlertMessageNoGps();
         }
         SessionHelper.mLocation = SessionHelper.mLocationUtility.getLastKnownLocation(getApplicationContext());
+
+        //check if we need this kale
+        //Launches loginActivity if UserInfo table is empty
+        if (!UserInfoDBHandler.CheckIfUserExistsInDB(getApplication().getApplicationContext())) {
+                    Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(i);
+        }
+        //
 
         // todo Launch Background thread to finish initialization and then launch activity
         Intent i = new Intent(this, LoginActivity.class);
