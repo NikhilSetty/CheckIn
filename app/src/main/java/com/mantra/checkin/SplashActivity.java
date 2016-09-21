@@ -31,8 +31,10 @@ public class SplashActivity extends AppCompatActivity {
         }
         SessionHelper.mLocation = SessionHelper.mLocationUtility.getLastKnownLocation(getApplicationContext());
 
+        // todo Launch Background thread to finish initialization and then launch activity
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
+        finish();
     }
 
     private void buildAlertMessageNoGps() {

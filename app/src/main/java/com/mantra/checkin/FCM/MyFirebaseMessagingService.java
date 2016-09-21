@@ -2,19 +2,11 @@ package com.mantra.checkin.FCM;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.mantra.checkin.MainActivity;
-import com.mantra.checkin.R;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
