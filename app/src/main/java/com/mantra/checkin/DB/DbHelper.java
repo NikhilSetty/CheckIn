@@ -13,8 +13,10 @@ public class DbHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.v("creating " , "DB");
-        Log.v("created " , "DB");
         db.execSQL(Schema.CREATE_TABLE_USERINFO);
+        db.execSQL(Schema.CREATE_TABLE_SETTINGS_INFO);
+        Log.v("created " , "DB");
+
     }
 
     @Override

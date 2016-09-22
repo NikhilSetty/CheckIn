@@ -101,12 +101,16 @@ public class LoginActivity extends AppCompatActivity implements
             GoogleSignInAccount acct = result.getSignInAccount();
             if (acct != null) {
                 UserInfo userinfo = new UserInfo();
-                userinfo.setUserEmail(acct.getEmail());
-                userinfo.setUserName(acct.getDisplayName());
-                userinfo.setFirstName(acct.getGivenName());
-                userinfo.setLastName(acct.getFamilyName());
-                userinfo.setUserID(acct.getId());
-                UserInfoDBHandler.InsertUserDetails(getApplicationContext(),userinfo);
+                try {
+                    userinfo.setUserEmail(acct.getEmail());
+                    userinfo.setUserName(acct.getDisplayName());
+                    userinfo.setFirstName(acct.getGivenName());
+                    userinfo.setLastName(acct.getFamilyName());
+                    userinfo.setUserID(acct.getId());
+                    UserInfoDBHandler.InsertUserDetails(getApplicationContext(), userinfo);
+                }catch(Exception e){
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
 
                 //check if this is needed here or somewhere else
                 SettingsInfo settingsInfo =new SettingsInfo();
@@ -115,10 +119,10 @@ public class LoginActivity extends AppCompatActivity implements
                 //
 
                 // todo Send the details to the server for the first time
-                Intent i = new Intent(this, Phonenumber.class);
+                Intent i = new Intent(this, PhoneNumberActivity.class);
                 startActivity(i);
-            }else
-            {
+            }
+            else{
                 //Exception to be raised here
                 Toast.makeText(getApplicationContext(),"Account details are null",Toast.LENGTH_LONG).show();
             }
