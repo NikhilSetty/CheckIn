@@ -9,6 +9,7 @@ public class Schema {
             + DbTableStrings.USERPHOTO + " string, "
             + DbTableStrings.FIRSTNAME + " string, "
             + DbTableStrings.LASTNAME + " string, "
+            + DbTableStrings.USER_PHONE_NUMBER + " string, "
             + DbTableStrings.USERID + " string) ";
 
     public static final String CREATE_TABLE_SETTINGS_INFO = "create table if not exists " + DbTableStrings.TABLE_NAME_SETTINGS_INFO +

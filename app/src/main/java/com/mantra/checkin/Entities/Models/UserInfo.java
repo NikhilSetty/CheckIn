@@ -4,12 +4,21 @@ package com.mantra.checkin.Entities.Models;
  * Created by adithyar on 9/21/2016.
  */
 public class UserInfo {
-    public String UserName;
-    public String UserEmail;
-    public String UserPhoto;
-    public String FirstName;
-    public String LastName;
-    public String UserID;
+    public String UserName = "";
+    public String UserEmail = "";
+    public String UserPhoto = "";
+    public String FirstName = "";
+    public String LastName = "";
+    public String UserID = "";
+    public String PhoneNumber = "";
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        PhoneNumber = phoneNumber;
+    }
 
     public String getUserID() {
         return UserID;

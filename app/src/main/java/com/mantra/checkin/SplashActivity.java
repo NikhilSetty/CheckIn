@@ -33,8 +33,8 @@ public class SplashActivity extends AppCompatActivity {
         }
         SessionHelper.mLocation = SessionHelper.mLocationUtility.getLastKnownLocation(getApplicationContext());
 
-        //check if we need this kale
-        //Launches loginActivity if UserInfo table is empty
+        // check if we need this kale
+        // Launches loginActivity if UserInfo table is empty
         if (!UserInfoDBHandler.CheckIfUserExistsInDB(getApplication().getApplicationContext())) {
                     Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(i);
