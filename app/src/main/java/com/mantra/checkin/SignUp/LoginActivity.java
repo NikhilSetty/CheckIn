@@ -22,8 +22,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.mantra.checkin.DBHandlers.SettingsInfoDBHandler;
 import com.mantra.checkin.DBHandlers.UserInfoDBHandler;
 import com.mantra.checkin.MainActivity;
-import com.mantra.checkin.Models.SettingsInfo;
-import com.mantra.checkin.Models.UserInfo;
+import com.mantra.checkin.Entities.Models.SettingsInfo;
+import com.mantra.checkin.Entities.Models.UserInfo;
 import com.mantra.checkin.R;
 
 public class LoginActivity extends AppCompatActivity implements

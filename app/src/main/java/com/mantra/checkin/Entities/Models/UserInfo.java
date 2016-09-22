@@ -1,4 +1,4 @@
-package com.mantra.checkin.Models;
+package com.mantra.checkin.Entities.Models;
 
 /**
  * Created by adithyar on 9/21/2016.

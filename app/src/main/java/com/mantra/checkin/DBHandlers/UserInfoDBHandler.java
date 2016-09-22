@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.mantra.checkin.DB.DbHelper;
 import com.mantra.checkin.DB.DbTableStrings;
-import com.mantra.checkin.Models.UserInfo;
+import com.mantra.checkin.Entities.Models.UserInfo;
 
 /**
  * Created by adithyar on 9/21/2016.
