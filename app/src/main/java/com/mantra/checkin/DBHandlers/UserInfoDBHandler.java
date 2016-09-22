@@ -16,7 +16,7 @@ import com.mantra.checkin.Entities.Models.UserInfo;
  */
 public class UserInfoDBHandler {
 
-    private final String TAG = "UserInfoDBHandler";
+    private static final String TAG = "UserInfoDBHandler";
 
     private static DbHelper dbHelper;
     private static SQLiteDatabase db;

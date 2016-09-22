@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class WifiUtility {
 
-    private final String TAG = "WifiUtility";
+    private final static String TAG = "WifiUtility";
 
     // Add network configuration to the device
     public static void addNetworkConfig(String ssid, String password, WiFiConfigTypes type, Context context) throws Exception {

@@ -19,6 +19,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.i18n.phonenumbers.Phonenumber;
 import com.mantra.checkin.DBHandlers.SettingsInfoDBHandler;
 import com.mantra.checkin.DBHandlers.UserInfoDBHandler;
 import com.mantra.checkin.MainActivity;
@@ -114,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements
                 //
 
                 // todo Send the details to the server for the first time
-                Intent i = new Intent(this, MainActivity.class);
+                Intent i = new Intent(this, Phonenumber.class);
                 startActivity(i);
             }else
             {
