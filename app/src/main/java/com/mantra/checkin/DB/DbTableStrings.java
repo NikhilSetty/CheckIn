@@ -12,6 +12,7 @@ public class DbTableStrings {
     public static final String LASTNAME = "user_last_name";
     public static final String USERID = "user_id";
     public static final String USER_PHONE_NUMBER = "user_phone_number";
+    public static final String CHECKIN_SERVER_USERID = "checkin_server_userid";
 
     //Strings for Settings
     public static final String TABLE_NAME_SETTINGS_INFO = "settings_info";

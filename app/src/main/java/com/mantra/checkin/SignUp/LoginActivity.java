@@ -2,6 +2,7 @@ package com.mantra.checkin.SignUp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -163,5 +164,23 @@ public class LoginActivity extends AppCompatActivity implements
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         }
+    }
+
+    public class SendUserDetailsToServer extends AsyncTask<String,Void,Boolean>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+        }
+
+
     }
 }

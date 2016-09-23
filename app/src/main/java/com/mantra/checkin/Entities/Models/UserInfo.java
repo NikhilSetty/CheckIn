@@ -9,8 +9,30 @@ public class UserInfo {
     public String UserPhoto = "";
     public String FirstName = "";
     public String LastName = "";
+    //UserID from google
     public String UserID = "";
+    //CheckInServerUserId from CheckIn Server
+    public String CheckInServerUserId = "";
+    public String RemotePhotoServerURL = "";
     public String PhoneNumber = "";
+
+
+    public String getRemotePhotoServerURL() {
+        return RemotePhotoServerURL;
+    }
+
+    public void setRemotePhotoServerURL(String remotePhotoServerURL) {
+        RemotePhotoServerURL = remotePhotoServerURL;
+    }
+
+    public String getCheckInServerUserId() {
+        return CheckInServerUserId;
+    }
+
+    public void setCheckInServerUserId(String checkInServerUserId) {
+        CheckInServerUserId = checkInServerUserId;
+    }
+
 
     public String getPhoneNumber() {
         return PhoneNumber;

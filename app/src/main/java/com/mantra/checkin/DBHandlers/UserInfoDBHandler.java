@@ -77,8 +77,9 @@ public class UserInfoDBHandler {
                 userModel.setUserEmail(c.getString(c.getColumnIndex(DbTableStrings.USEREMAIL)));
                 userModel.setUserID(c.getString(c.getColumnIndex(DbTableStrings.USERID)));
                 userModel.setUserName(c.getString(c.getColumnIndex(DbTableStrings.USERNAME)));
+                userModel.setPhoneNumber(c.getString(c.getColumnIndex(DbTableStrings.USER_PHONE_NUMBER)));
+                userModel.setCheckInServerUserId(c.getString(c.getColumnIndex(DbTableStrings.CHECKIN_SERVER_USERID)));
                 userModel.setUserPhoto(c.getString(c.getColumnIndex(DbTableStrings.USERPHOTO)));
-
                 return  userModel;
             }
             else{
@@ -89,5 +90,19 @@ public class UserInfoDBHandler {
             Log.e(TAG, e.getMessage());
         }
         return null;
+    }
+    public static void  InsertCheckinServerUserID(Context context,String userid){
+        try{
+            dbHelper = new DbHelper(context);
+            db = dbHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DbTableStrings.CHECKIN_SERVER_USERID,userid);
+            String selection = DbTableStrings.USERID + " LIKE ?";
+            String[] selectionargs = {String.valueOf(DbTableStrings.USERID)};
+           db.update(DbTableStrings.TABLE_NAME_USER_INFO,contentValues,selection,selectionargs);
+
+        }catch (Exception e){
+            Log.e(TAG, e.getMessage());
+        }
     }
 }
