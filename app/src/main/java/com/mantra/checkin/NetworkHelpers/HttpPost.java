@@ -17,7 +17,7 @@ public class HttpPost {
 
     String DEBUG_TAG = "HttpPost";
 
-    public String httpPost(String stringUrl, String entity) throws IOException {
+    public String post(String stringUrl, String entity) throws IOException {
         InputStream is = null;
 
         try {

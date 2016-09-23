@@ -5,6 +5,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.mantra.checkin.Entities.Constants;
+import com.mantra.checkin.Entities.Enums.ResponseStatusCodes;
+
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,5 +46,19 @@ public class Utility {
 
         inputStream.close();
         return result;
+    }
+
+    public static ResponseStatusCodes getResponseStatus(String response){
+        try{
+
+            JSONObject json = new JSONObject(response);
+            JSONObject status = json.getJSONObject(Constants.responseStringStatus);
+            return ResponseStatusCodes.fromInteger(status.getInt(Constants.responseIntStatusCode));
+
+        }catch (Exception e){
+            Log.e(TAG, e.getMessage());
+        }
+
+        return ResponseStatusCodes.Error;
     }
 }

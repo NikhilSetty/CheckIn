@@ -19,9 +19,11 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.i18n.phonenumbers.Phonenumber;
 import com.mantra.checkin.DBHandlers.SettingsInfoDBHandler;
 import com.mantra.checkin.DBHandlers.UserInfoDBHandler;
+import com.mantra.checkin.FCM.MyFireBaseInstanceIdService;
 import com.mantra.checkin.MainActivity;
 import com.mantra.checkin.Entities.Models.SettingsInfo;
 import com.mantra.checkin.Entities.Models.UserInfo;
@@ -113,14 +115,15 @@ public class LoginActivity extends AppCompatActivity implements
                 }
 
                 //check if this is needed here or somewhere else
-                SettingsInfo settingsInfo =new SettingsInfo();
+                SettingsInfo settingsInfo = new SettingsInfo();
                 settingsInfo.setLoggedIn(true);
                 SettingsInfoDBHandler.InsertSettingsInfo(getApplicationContext(),settingsInfo);
-                //
 
+                MyFireBaseInstanceIdService.sendRegistrationToServer();
                 // todo Send the details to the server for the first time
                 Intent i = new Intent(this, PhoneNumberActivity.class);
                 startActivity(i);
+                finish();
             }
             else{
                 //Exception to be raised here

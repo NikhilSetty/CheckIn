@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            android:text="@string/please_enter_your_phone_number"
             android:id="@+id/textViewPleaseEnterYourPhoneNumber"
             android:textAlignment="center"
             android:layout_marginTop="53dp" />
@@ -28,22 +28,31 @@
             android:layout_marginTop="60dp"
             android:layout_height="wrap_content">
 
-            <Spinner
+            <!--<Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:id="@+id/spinnerCountryCode"/>
+                android:visibility="gone"
+                android:id="@+id/spinnerCountryCode"/>-->
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
                 android:ems="10"
-                android:layout_weight="8"
-                android:id="@+id/editText" />
+                android:hint="9999999999"
+                android:textAlignment="center"
+                android:id="@+id/editTextPhoneNumber"
+                android:layout_margin="10dp" />
 
         </LinearLayout>
-
-
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:id="@+id/buttonContinue"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
