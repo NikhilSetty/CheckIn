@@ -80,6 +80,8 @@ public class UserInfoDBHandler {
                 userModel.setPhoneNumber(c.getString(c.getColumnIndex(DbTableStrings.USER_PHONE_NUMBER)));
                 userModel.setCheckInServerUserId(c.getString(c.getColumnIndex(DbTableStrings.CHECKIN_SERVER_USERID)));
                 userModel.setUserPhoto(c.getString(c.getColumnIndex(DbTableStrings.USERPHOTO)));
+                userModel._id = c.getInt(c.getColumnIndex("_id"));
+
                 return  userModel;
             }
             else{
@@ -90,6 +92,27 @@ public class UserInfoDBHandler {
             Log.e(TAG, e.getMessage());
         }
         return null;
+    }
+
+    public static boolean updatePhoneNumberForUser(Context context, String phoneNumber){
+        try{
+            dbHelper = new DbHelper(context);
+            db = dbHelper.getWritableDatabase();
+
+            UserInfo oldUserInfo = FetchCurrentUserDetails(context);
+
+            if(oldUserInfo != null) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DbTableStrings.USER_PHONE_NUMBER, phoneNumber);
+
+                db.update(DbTableStrings.TABLE_NAME_USER_INFO, contentValues, "_id =" + oldUserInfo._id, null);
+
+                return true;
+            }
+        }catch (Exception e){
+            Log.e(TAG, e.getMessage());
+        }
+        return false;
     }
     public static void  InsertCheckinServerUserID(Context context,String userid){
         try{

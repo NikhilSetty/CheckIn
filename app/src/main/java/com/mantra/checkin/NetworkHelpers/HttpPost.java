@@ -49,8 +49,7 @@ public class HttpPost {
             is = conn.getInputStream();
 
             // Convert the InputStream into a string
-            String contentAsString = Utility.convertInputStreamToString(is);
-            return contentAsString;
+            return Utility.convertInputStreamToString(is);
 
             // Makes sure that the InputStream is closed after the app is
             // finished using it.

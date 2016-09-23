@@ -15,6 +15,7 @@ public class UserInfo {
     public String CheckInServerUserId = "";
     public String RemotePhotoServerURL = "";
     public String PhoneNumber = "";
+    public int _id = 0;
 
 
     public String getRemotePhotoServerURL() {
