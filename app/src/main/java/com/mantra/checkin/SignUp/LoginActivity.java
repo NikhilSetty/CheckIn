@@ -1,6 +1,7 @@
 package com.mantra.checkin.SignUp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,13 +25,16 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.i18n.phonenumbers.Phonenumber;
 import com.mantra.checkin.DBHandlers.SettingsInfoDBHandler;
 import com.mantra.checkin.DBHandlers.UserInfoDBHandler;
+import com.mantra.checkin.Entities.Enums.ResponseStatusCodes;
 import com.mantra.checkin.FCM.MyFireBaseInstanceIdService;
 import com.mantra.checkin.Entities.JSONKEYS.UserInfoJSON;
 import com.mantra.checkin.MainActivity;
 import com.mantra.checkin.Entities.Models.SettingsInfo;
 import com.mantra.checkin.Entities.Models.UserInfo;
 import com.mantra.checkin.NetworkHelpers.HttpPost;
+import com.mantra.checkin.NetworkHelpers.Utility;
 import com.mantra.checkin.R;
+import com.mantra.checkin.Session.SessionHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
+    public static String response = "";
 
     GoogleApiClient mGoogleApiClient;
     private ProgressDialog mProgressDialog;
@@ -128,7 +133,6 @@ public class LoginActivity extends AppCompatActivity implements
                 SettingsInfo settingsInfo = new SettingsInfo();
                 settingsInfo.setLoggedIn(true);
                 SettingsInfoDBHandler.InsertSettingsInfo(getApplicationContext(),settingsInfo);
-                SettingsInfoDBHandler.InsertSettingsInfo(getApplicationContext(), settingsInfo);
                 //
                 UserInfo db_user_model = new UserInfo();
                 db_user_model = UserInfoDBHandler.FetchCurrentUserDetails(getApplicationContext());
@@ -139,15 +143,15 @@ public class LoginActivity extends AppCompatActivity implements
                     jsonObject.put(userInfoJSON.LASTNAME, db_user_model.getLastName());
                     jsonObject.put(userInfoJSON.USERNAME, db_user_model.getUserName());
                     jsonObject.put(userInfoJSON.USEREMAIL, db_user_model.getUserEmail());
-                    jsonObject.put(userInfoJSON.USERID, db_user_model.getUserID());
+                    jsonObject.put(userInfoJSON.USERID, db_user_model.getUserID().toString());
                     jsonObject.put(userInfoJSON.USER_PHONE_NUMBER, db_user_model.getPhoneNumber());
                     jsonObject.put(userInfoJSON.USERPHOTO, "dummy url");
                     json = jsonObject.toString();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                new SendUserDetailsToServer().execute("http://10.85.193.92/CheckIn/api/User/AddUser", json);
-
+//                new SendUserDetailsToServer().execute("http://10.85.193.92/CheckIn/api/User/AddUser", json);
+                SendUserDetailsToServer(getApplicationContext(),json);
 
                 MyFireBaseInstanceIdService.sendRegistrationToServer();
                 // todo Send the details to the server for the first time
@@ -155,14 +159,14 @@ public class LoginActivity extends AppCompatActivity implements
                 startActivity(i);
                 finish();
             }
-            else{
-            } else {
+            else {
                 //Exception to be raised here
                 Toast.makeText(getApplicationContext(), "Account details are null", Toast.LENGTH_LONG).show();
             }
-        } else {
+        }else {
             // Signed out, show unauthenticated UI.
         }
+
     }
 
 
@@ -199,27 +203,21 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
-    public class SendUserDetailsToServer extends AsyncTask<String,Void,String>{
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+        public static void SendUserDetailsToServer(final Context context,final String json) {
+          AsyncTask<String,String,String> PostServerDetails = new AsyncTask<String,String,String>(){
+              @Override
+              protected String doInBackground(String... strings) {
+                  HttpPost httpPost = new HttpPost();
+                  try {
+                      Log.d("BBBBBBBBBBB",json);
+                      response = httpPost.post("http://10.85.193.92/CheckIn/api/User/AddUser", json);
+                      Log.d("AAAAAAAAAAAAAAAAAAAA",response);
+                  }catch (Exception e){
+                  }
+                  return response;
+              }
+          };
+            PostServerDetails.execute("");
         }
 
-        @Override
-        protected String doInBackground(String... strings) {
-            HttpPost httpPost = new HttpPost();
-            try {
-                String checkinUserid;
-                checkinUserid = httpPost.httpPost(strings[0],strings[1]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return "a";
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-    }
 }

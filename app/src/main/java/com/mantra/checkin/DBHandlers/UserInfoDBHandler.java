@@ -114,15 +114,16 @@ public class UserInfoDBHandler {
         }
         return false;
     }
-    public static void  InsertCheckinServerUserID(Context context,String userid){
+    public static void InsertCheckinServerUserID(Context context,String userid){
         try{
             dbHelper = new DbHelper(context);
             db = dbHelper.getWritableDatabase();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(DbTableStrings.CHECKIN_SERVER_USERID,userid);
-            String selection = DbTableStrings.USERID + " LIKE ?";
-            String[] selectionargs = {String.valueOf(DbTableStrings.USERID)};
-           db.update(DbTableStrings.TABLE_NAME_USER_INFO,contentValues,selection,selectionargs);
+            UserInfo dbuser = FetchCurrentUserDetails(context);
+            if (dbuser !=null) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DbTableStrings.CHECKIN_SERVER_USERID, userid);
+                db.update(DbTableStrings.TABLE_NAME_USER_INFO, contentValues, "_id =" + dbuser._id, null);
+            }
         }catch (Exception e){
             Log.e(TAG, e.getMessage());
         }
