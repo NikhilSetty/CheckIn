@@ -11,6 +11,7 @@ public class UserInfo {
     public String LastName = "";
     public String UserID = "";
     public String PhoneNumber = "";
+    public int _id = 0;
 
     public String getPhoneNumber() {
         return PhoneNumber;
