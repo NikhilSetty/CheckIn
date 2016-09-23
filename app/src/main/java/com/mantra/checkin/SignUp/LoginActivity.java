@@ -20,9 +20,11 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.i18n.phonenumbers.Phonenumber;
 import com.mantra.checkin.DBHandlers.SettingsInfoDBHandler;
 import com.mantra.checkin.DBHandlers.UserInfoDBHandler;
+import com.mantra.checkin.FCM.MyFireBaseInstanceIdService;
 import com.mantra.checkin.Entities.JSONKEYS.UserInfoJSON;
 import com.mantra.checkin.MainActivity;
 import com.mantra.checkin.Entities.Models.SettingsInfo;
@@ -118,13 +120,14 @@ public class LoginActivity extends AppCompatActivity implements
                     userinfo.setLastName(acct.getFamilyName());
                     userinfo.setUserID(acct.getId());
                     UserInfoDBHandler.InsertUserDetails(getApplicationContext(), userinfo);
-                } catch (Exception e) {
+                }catch(Exception e){
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
                 //check if this is needed here or somewhere else
                 SettingsInfo settingsInfo = new SettingsInfo();
                 settingsInfo.setLoggedIn(true);
+                SettingsInfoDBHandler.InsertSettingsInfo(getApplicationContext(),settingsInfo);
                 SettingsInfoDBHandler.InsertSettingsInfo(getApplicationContext(), settingsInfo);
                 //
                 UserInfo db_user_model = new UserInfo();
@@ -146,9 +149,13 @@ public class LoginActivity extends AppCompatActivity implements
                 new SendUserDetailsToServer().execute("http://10.85.193.92/CheckIn/api/User/AddUser", json);
 
 
+                MyFireBaseInstanceIdService.sendRegistrationToServer();
                 // todo Send the details to the server for the first time
                 Intent i = new Intent(this, PhoneNumberActivity.class);
                 startActivity(i);
+                finish();
+            }
+            else{
             } else {
                 //Exception to be raised here
                 Toast.makeText(getApplicationContext(), "Account details are null", Toast.LENGTH_LONG).show();
