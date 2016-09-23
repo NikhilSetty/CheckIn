@@ -100,7 +100,6 @@ public class UserInfoDBHandler {
             String selection = DbTableStrings.USERID + " LIKE ?";
             String[] selectionargs = {String.valueOf(DbTableStrings.USERID)};
            db.update(DbTableStrings.TABLE_NAME_USER_INFO,contentValues,selection,selectionargs);
-
         }catch (Exception e){
             Log.e(TAG, e.getMessage());
         }

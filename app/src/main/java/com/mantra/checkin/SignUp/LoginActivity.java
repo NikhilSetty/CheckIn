@@ -23,13 +23,20 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.i18n.phonenumbers.Phonenumber;
 import com.mantra.checkin.DBHandlers.SettingsInfoDBHandler;
 import com.mantra.checkin.DBHandlers.UserInfoDBHandler;
+import com.mantra.checkin.Entities.JSONKEYS.UserInfoJSON;
 import com.mantra.checkin.MainActivity;
 import com.mantra.checkin.Entities.Models.SettingsInfo;
 import com.mantra.checkin.Entities.Models.UserInfo;
+import com.mantra.checkin.NetworkHelpers.HttpPost;
 import com.mantra.checkin.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 public class LoginActivity extends AppCompatActivity implements
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -96,6 +103,8 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
+        String json = "";
+
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
@@ -109,23 +118,40 @@ public class LoginActivity extends AppCompatActivity implements
                     userinfo.setLastName(acct.getFamilyName());
                     userinfo.setUserID(acct.getId());
                     UserInfoDBHandler.InsertUserDetails(getApplicationContext(), userinfo);
-                }catch(Exception e){
+                } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
                 //check if this is needed here or somewhere else
-                SettingsInfo settingsInfo =new SettingsInfo();
+                SettingsInfo settingsInfo = new SettingsInfo();
                 settingsInfo.setLoggedIn(true);
-                SettingsInfoDBHandler.InsertSettingsInfo(getApplicationContext(),settingsInfo);
+                SettingsInfoDBHandler.InsertSettingsInfo(getApplicationContext(), settingsInfo);
                 //
+                UserInfo db_user_model = new UserInfo();
+                db_user_model = UserInfoDBHandler.FetchCurrentUserDetails(getApplicationContext());
+                UserInfoJSON userInfoJSON = new UserInfoJSON();
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put(userInfoJSON.FIRSTNAME, db_user_model.getFirstName());
+                    jsonObject.put(userInfoJSON.LASTNAME, db_user_model.getLastName());
+                    jsonObject.put(userInfoJSON.USERNAME, db_user_model.getUserName());
+                    jsonObject.put(userInfoJSON.USEREMAIL, db_user_model.getUserEmail());
+                    jsonObject.put(userInfoJSON.USERID, db_user_model.getUserID());
+                    jsonObject.put(userInfoJSON.USER_PHONE_NUMBER, db_user_model.getPhoneNumber());
+                    jsonObject.put(userInfoJSON.USERPHOTO, "dummy url");
+                    json = jsonObject.toString();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                new SendUserDetailsToServer().execute("http://10.85.193.92/CheckIn/api/User/AddUser", json);
+
 
                 // todo Send the details to the server for the first time
                 Intent i = new Intent(this, PhoneNumberActivity.class);
                 startActivity(i);
-            }
-            else{
+            } else {
                 //Exception to be raised here
-                Toast.makeText(getApplicationContext(),"Account details are null",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Account details are null", Toast.LENGTH_LONG).show();
             }
         } else {
             // Signed out, show unauthenticated UI.
@@ -166,21 +192,27 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
-    public class SendUserDetailsToServer extends AsyncTask<String,Void,Boolean>{
+    public class SendUserDetailsToServer extends AsyncTask<String,Void,String>{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected Boolean doInBackground(String... strings) {
-            return null;
+        protected String doInBackground(String... strings) {
+            HttpPost httpPost = new HttpPost();
+            try {
+                String checkinUserid;
+                checkinUserid = httpPost.httpPost(strings[0],strings[1]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "a";
         }
+
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
         }
-
-
     }
 }
